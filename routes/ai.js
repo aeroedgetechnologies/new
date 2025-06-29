@@ -269,4 +269,28 @@ async function transcribeAudio(audioData) {
   return sampleTranscriptions[Math.floor(Math.random() * sampleTranscriptions.length)]
 }
 
+// Simple chat endpoint without authentication (for testing)
+router.post('/chat', async (req, res) => {
+  try {
+    const { message, context } = req.body
+    
+    if (!message || !message.trim()) {
+      return res.status(400).json({ error: 'Message is required' })
+    }
+
+    // Process with AI (offline/local processing)
+    const aiResponse = await processWithLocalAI(message, context || [])
+    
+    res.json({
+      success: true,
+      response: aiResponse,
+      message: 'Message processed successfully'
+    })
+
+  } catch (error) {
+    console.error('Error processing chat:', error)
+    res.status(500).json({ error: 'Failed to process message' })
+  }
+})
+
 module.exports = router 
