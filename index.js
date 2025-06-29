@@ -13,12 +13,7 @@ const PORT = process.env.PORT || 5000
 
 // Middleware
 app.use(helmet())
-app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? ['https://yourdomain.com'] 
-    : ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002'],
-  credentials: true
-}))
+app.use(cors({ origin: '*', credentials: true }))
 app.use(express.json({ limit: '50mb' }))
 app.use(express.urlencoded({ extended: true, limit: '50mb' }))
 
